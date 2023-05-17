@@ -60,11 +60,14 @@ export function JSONToGradeCollection(json) {
  * @returns {GradeJson}
  */
 function GradeToJSON(grade) {
+    /** @type {GradeJson} */
     const gradeJson = {
         l: grade.label,
-        b: grade.base,
-        c: grade.childRanges?.map(GradeToJSON)
+        b: grade.base
     };
+    if (grade.childRanges) {
+        gradeJson.c = grade.childRanges?.map(GradeToJSON)
+    }
     return gradeJson;
 }
 
