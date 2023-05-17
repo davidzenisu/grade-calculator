@@ -15,7 +15,7 @@ import GradePreset from '$lib/presets/gradePresets';
  * @prop {number} [fraction=1] Number to include fractions of points (1/2, 1/3, etc.)
  */
 
-export class GradeFactory {
+export default class GradeFactory {
 	constructor(def = { grades:  GradePreset('US')} ) {
 		this.#gradeDefinitions = def;
 	}
@@ -24,11 +24,11 @@ export class GradeFactory {
 	#gradeDefinitions;
 
 	/**
-	 * Generates list of grades based on top score and % ranges
-	 * @param {number[]} ranges
+	 * Generates list of grades based on max score and predefined grade ranges
+	 * @param {GradeOptions} options
 	 * @returns {Grade[]}
 	 */
-	generate(ranges) {
-		return [];
+	generate(options = { max: 100 }) {
+		return this.#gradeDefinitions.grades;
 	}
 }

@@ -1,29 +1,16 @@
 <script>
+    import GradeFactory from "$lib/gradeFactory";
+
 	export let maxPoints = 100;
+    const gradeFactory = new GradeFactory();
+    const grades = gradeFactory.generate();
 </script>
 
 <div class="grow text-4xl overflow-auto p-8">
-    <div>Max points: {maxPoints}</div>
+    <div>Current Max Score: {maxPoints}</div>
     <ul>
-        <li>20-100</li>
-        <li>234</li>
-        <li>234</li>
-        <li>234</li>
-        <li>234</li>
-        <li>234</li>
-        <li>234</li>
-        <li>234</li>
-        <li>234</li>
-        <li>234</li>
-        <li>234</li>
-        <li>234</li>
-        <li>234</li>
-        <li>234</li>
-        <li>234</li>
-        <li>234</li>
-        <li>234</li>
-        <li>234</li>
-        <li>234</li>
-        <li>234</li>
+        {#each grades as grade, i}
+		    <li>{grade.label}: {grade.base}</li>
+	    {/each}
     </ul>
 </div>
