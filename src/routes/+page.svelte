@@ -1,10 +1,20 @@
 <script>
 	import GradeViewer from '$lib/gradeViewer.svelte';
+    let maxScore = 100;
 </script>
 
 <div class="flex min-h-screen max-h-screen flex-col items-center justify-between p-8 gap-4">
+    <input class="text-3xl text-center shadow appearance-none border rounded 
+	w-28 py-4 px-4 text-gray-700 mb-3 leading-tight 
+	focus:outline-none focus:shadow-outline" 
+	bind:value={maxScore}
+	type="number" 
+	id="weatherId"
+	min="1" 
+	max="1000" 
+	step="1">
     <h1 class="text-3xl">Hello world!</h1>
-    <GradeViewer></GradeViewer>
+    <GradeViewer maxPoints={maxScore || 0}></GradeViewer>
     <div class="text-3xl">Footer lol</div>
 </div>
 
