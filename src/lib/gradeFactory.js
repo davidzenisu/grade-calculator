@@ -22,8 +22,12 @@ import GradePreset from '$lib/presets/gradePresets';
  */
 
 export default class GradeFactory {
-	constructor(def = { grades:  GradePreset('US')} ) {
-		this.#gradeCollection = def;
+	/**
+	 * @param {string} [preset=AT]
+	 */
+	constructor(preset = 'AT') {
+		const gradeDefinitions = GradePreset(preset);
+		this.#gradeCollection =  { grades: gradeDefinitions } ;
 	}
 
 	/** @type {GradeCollection} @readonly */
@@ -82,14 +86,31 @@ export default class GradeFactory {
 		return this.#sortGradeDef(gradeDefinitions);
 	}
 
+
+	/**
+	 * Recursively generates a list of grades based on max score and grade ranges
+	 * @param {GradeDefinition[]} gradeDef
+	 * @param {GradeOptions} options
+	 * @returns {Grade[]}
+	 */
+	#generate(gradeDef, options) {
+		const gradeDefSorted = this.#sortGradeDefAsc(gradeDef);
+		const calculatedGrades = gradeDefSorted.map((g,i,gs) => {
+			const calculatedGrade = this.#calculateGrade(g, options.max, gs[i-1]);
+			if (g.children) {
+				calculatedGrade.children = this.#generate(g.children, options);
+			}
+			return calculatedGrade;
+		});
+		return calculatedGrades.reverse();
+	}
+
 	/**
 	 * Generates list of grades based on max score and predefined grade ranges
 	 * @param {GradeOptions} options
 	 * @returns {Grade[]}
 	 */
 	generate(options = { max: 100 }) {
-		const gradeDefSorted = this.#sortGradeDefAsc(this.#gradeCollection.grades);
-		const calculatedGrades = gradeDefSorted.map((g,i,gs) => this.#calculateGrade(g, options.max, gs[i-1]));
-		return calculatedGrades.reverse();
+		return this.#generate(this.#gradeCollection.grades, options);
 	}
 }
