@@ -13,9 +13,8 @@
 	min="1" 
 	max="1000" 
 	step="1">
-    <h1 class="text-3xl">Hello world!</h1>
     <GradeListViewer maxPoints={maxScore || 0}></GradeListViewer>
-    <div class="text-3xl">Footer lol</div>
+    <div class="text-xl">© ovid 2023</div>
 </div>
 
 <style lang="postcss">

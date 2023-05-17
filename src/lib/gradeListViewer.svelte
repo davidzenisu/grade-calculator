@@ -8,4 +8,6 @@
     $: grades = gradeFactory.generate({ max: maxPoints });
 </script>
 
-<GradeViewer grades={grades}></GradeViewer>
+<div class="grow text-4xl overflow-auto flex flex-col gap-3">
+    <GradeViewer grades={grades}></GradeViewer>
+</div>
