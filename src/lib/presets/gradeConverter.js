@@ -15,7 +15,7 @@
 /**
  * Converts the minified json format to a grade.
  * @param {GradeJson} json
- * @returns {import('$lib/gradeFactory').Grade}
+ * @returns {import('$lib/gradeFactory').GradeDefinition}
  */
 function JSONToGrade(json) {
     const parsedGrade = {
@@ -56,7 +56,7 @@ export function JSONToGradeCollection(json) {
 
 /**
  * Converts a grade to a minified json format.
- * @param {import('$lib/gradeFactory').Grade} grade
+ * @param {import('$lib/gradeFactory').GradeDefinition} grade
  * @returns {GradeJson}
  */
 function GradeToJSON(grade) {
@@ -65,8 +65,8 @@ function GradeToJSON(grade) {
         l: grade.label,
         b: grade.base
     };
-    if (grade.childRanges) {
-        gradeJson.c = grade.childRanges?.map(GradeToJSON)
+    if (grade.children) {
+        gradeJson.c = grade.children?.map(GradeToJSON)
     }
     return gradeJson;
 }
