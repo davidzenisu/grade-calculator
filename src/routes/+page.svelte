@@ -1,5 +1,5 @@
 <script>
-	import GradeViewer from '$lib/gradeViewer.svelte';
+	import GradeListViewer from '$lib/gradeListViewer.svelte';
     let maxScore = 100;
 </script>
 
@@ -14,7 +14,7 @@
 	max="1000" 
 	step="1">
     <h1 class="text-3xl">Hello world!</h1>
-    <GradeViewer maxPoints={maxScore || 0}></GradeViewer>
+    <GradeListViewer maxPoints={maxScore || 0}></GradeListViewer>
     <div class="text-3xl">Footer lol</div>
 </div>
 

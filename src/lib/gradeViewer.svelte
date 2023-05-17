@@ -1,15 +1,19 @@
 <script>
-    import GradeFactory from "$lib/gradeFactory";
-
-	export let maxPoints = 100;
-    const gradeFactory = new GradeFactory();
-    $: grades = gradeFactory.generate({ max: maxPoints });
+    /** @type {import('$lib/gradeFactory').Grade[]}*/
+	export let grades;
 </script>
 
 <div class="grow text-4xl overflow-auto p-8">
     <ul>
         {#each grades as grade, i}
-		    <li>{grade.label}: {grade.max}-{grade.min}</li>
+            {#if grade.min === grade.max}
+                <li>{grade.label}: {grade.max}</li>
+            {:else}
+                <li>{grade.label}: {grade.min}-{grade.max}</li>
+            {/if}
+            {#if grade.children}
+                <svelte:self grades={grade.children}/>
+            {/if}
 	    {/each}
     </ul>
 </div>
