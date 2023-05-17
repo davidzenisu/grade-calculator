@@ -3,16 +3,16 @@
 @tailwind utilities;
 
 :root {
-    --foreground-rgb: 0, 0, 0;
-    --background-start-rgb: 214, 219, 220;
-    --background-end-rgb: 255, 255, 255; 
+    --foreground-rgb: black;
+    --background-start-rgb: theme(colors.slate.300);
+    --background-end-rgb: white; 
 }
 
 @media (prefers-color-scheme: dark) {
     :root {
-        --foreground-rgb: 255, 255, 255;
+        --foreground-rgb: theme(colors.teal.50);
         --background-start-rgb: theme(colors.slate.700);
-        --background-end-rgb: theme(colors.slate.950);
+        --background-end-rgb: theme(colors.rose.950);
     }
 }
 
@@ -26,18 +26,18 @@
 }
 
 *::-webkit-scrollbar-track {
-    background: rgb(var(--background-end-rgb));
+    background: var(--background-end-rgb);
     border-radius: 5px;
 }
 
 *::-webkit-scrollbar-thumb {
-    background-color: rgb(var(--foreground-rgb));
+    background-color: var(--foreground-rgb);
     border-radius: 14px;
-    border: 2px solid rgb(var(--foreground-rgb));
+    border: 2px solid var(--foreground-rgb);
 }
 
 body {
-    color: rgb(var(--foreground-rgb));
+    color: var(--foreground-rgb);
     background: linear-gradient(to bottom,
             transparent,
             var(--background-end-rgb)) var(--background-start-rgb);
