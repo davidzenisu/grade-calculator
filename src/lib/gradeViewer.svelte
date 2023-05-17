@@ -6,11 +6,14 @@
 </script>
 
 {#each grades as grade, i}
-    {#if grade.min === grade.max}
-        <div class="pl-{indent}">{grade.label}: {grade.max}</div>
-    {:else}
-        <div class="pl-{indent}">{grade.label}: {grade.min}-{grade.max}</div>
-    {/if}
+    <div class="flex flex-row px-{indent} gap-16 justify-between">
+        <div>{grade.label}:</div>
+        {#if grade.min === grade.max}
+            <div >{grade.max}</div>
+        {:else}
+            <div>{grade.min}-{grade.max}</div>
+        {/if}
+    </div>
     {#if grade.children}
         <svelte:self grades={grade.children} indent={indent+indentIncrement}/>
     {/if}
