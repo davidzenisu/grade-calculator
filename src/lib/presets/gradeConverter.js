@@ -18,11 +18,14 @@
  * @returns {import('$lib/gradeFactory').GradeDefinition}
  */
 function JSONToGrade(json) {
+    /** @type {import('$lib/gradeFactory').GradeDefinition} */
     const parsedGrade = {
         label: json.l,
-        base: json.b,
-        childRanges: json.c?.map(JSONToGrade)
+        base: json.b
     };
+    if (json.c) {
+        parsedGrade.children = json.c?.map(JSONToGrade);
+    }
     return parsedGrade;
 }
 
