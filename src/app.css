@@ -42,3 +42,24 @@ body {
             transparent,
             var(--background-end-rgb)) var(--background-start-rgb);
 }
+
+@layer components {
+    .int-primary {
+        @apply 
+            text-2xl text-center
+            shadow-sm appearance-none shadow-slate-200
+            border rounded
+            p-2
+            text-gray-700 leading-tight 
+            focus:outline-none;
+    }
+    .inp-primary {
+        @apply int-primary;
+    }
+    .sel-primary {
+        @apply int-primary text-xl;      
+    }
+    .btn-primary {
+        @apply int-primary text-xl;      
+    }
+}
