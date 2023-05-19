@@ -1,12 +1,12 @@
 <script>
     import GradeListViewer from '$lib/grades/gradeListViewer.svelte';
     import GradeFactory from '$lib/grades/gradeFactory';
+    import { gradeSetStore, maxScoreStore } from './gradeLocalStores';
+    import { get } from 'svelte/store';
 
-    let maxScore = 100;
-    let setId = 'AT';
     let fraction = 1;
+	let lastValue = get(maxScoreStore);
 
-	let lastValue = maxScore;
 	const gradeFactory = new GradeFactory();
 	const definitionSets = gradeFactory.getGradeDefinitions().map(c => c.id);
 
@@ -20,27 +20,28 @@
 		 * @param {number} value
 		 */
       update(value) {
-		maxScore = maxScore > parseInt(node.max) || maxScore < parseInt(node.min) ? lastValue : value;
-		lastValue = maxScore;
+		const newScore = get(maxScoreStore) > parseInt(node.max) || get(maxScoreStore) < parseInt(node.min) ? lastValue : value;
+		lastValue = newScore;
+        maxScoreStore.set(newScore);
       }
     }
   }
 </script>
 
 <div class="flex flex-1 h-full flex-col max-w-full justify-between">
-    <GradeListViewer factory={gradeFactory} maxPoints={maxScore || 0} setId={setId} ></GradeListViewer>
+    <GradeListViewer factory={gradeFactory} maxPoints={$maxScoreStore || 0} setId={$gradeSetStore} ></GradeListViewer>
     <div class="w-[28rem] max-w-full px-8">
         <form>
             <div class="flex flex-col gap-4">
                 <div class="flex flex-row gap-4 justify-center">
-                    <select class="sel-primary w-16" bind:value={setId}>
-                        {#each definitionSets as set, i}
+                    <select class="sel-primary w-16" bind:value={$gradeSetStore}>
+                        {#each definitionSets as set}
                             <option value="{set}">{set}</option>
                         {/each}
                     </select>
                     <input class="inp-primary w-28" 
-                    bind:value={maxScore}
-                    use:validator={maxScore}
+                    bind:value={$maxScoreStore}
+                    use:validator={$maxScoreStore}
                     type="number" 
                     id="maxScoreInput"
                     min="0" 
