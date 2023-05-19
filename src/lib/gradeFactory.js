@@ -1,4 +1,4 @@
-import GradePreset from '$lib/presets/gradePresets';
+import {GetGradePresets} from '$lib/presets/gradePresets';
 
 /**
  * @typedef Grade
@@ -14,24 +14,22 @@ import GradePreset from '$lib/presets/gradePresets';
  *
  * @typedef GradeCollection
  * @prop {GradeDefinition[]} grades List of grades to generate scores from.
- * @prop {string} [culture] Culture identifier to replace the grades
+ * @prop {string} id Identifier for grade collection.
+ * @prop {string} label Label for grade collection.
  *  
  * @typedef GradeOptions
+ * @prop {string} setId Id of the grade set to use.
  * @prop {number} max Max score to reach.
  * @prop {number} [fraction=1] Number to include fractions of points (1/2, 1/3, etc.)
  */
 
 export default class GradeFactory {
-	/**
-	 * @param {string} [preset=AT]
-	 */
-	constructor(preset = 'AT') {
-		const gradeDefinitions = GradePreset(preset);
-		this.#gradeCollection =  { grades: gradeDefinitions } ;
+	constructor() {
+		this.#gradeCollections = GetGradePresets();
 	}
 
-	/** @type {GradeCollection} @readonly */
-	#gradeCollection;
+	/** @type {GradeCollection[]} */
+	#gradeCollections;
 
 	/**
 	* Generates list of grades based on max score and predefined grade ranges
@@ -106,11 +104,23 @@ export default class GradeFactory {
 	}
 
 	/**
+	 * Returns list of available presets
+	 * @returns {GradeCollection[]}
+	 */
+	getGradeDefinitions() {
+		return this.#gradeCollections;
+	}
+
+	/**
 	 * Generates list of grades based on max score and predefined grade ranges
 	 * @param {GradeOptions} options
 	 * @returns {Grade[]}
 	 */
-	generate(options = { max: 100 }) {
-		return this.#generate(this.#gradeCollection.grades, options);
+	generate(options = { max: 100, setId: 'US' }) {
+		const gradeCollection = this.#gradeCollections.find(c => c.id === options.setId);
+		if (!gradeCollection) {
+			return [];
+		}
+		return this.#generate(gradeCollection.grades, options);
 	}
 }
