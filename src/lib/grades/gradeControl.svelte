@@ -2,10 +2,9 @@
     import GradeListViewer from '$lib/grades/gradeListViewer.svelte';
     import GradeFactory from '$lib/grades/gradeFactory';
     import { gradeSetStore, maxScoreStore } from './gradeLocalStores';
-    import { get } from 'svelte/store';
 
     let fraction = 1;
-	let lastValue = get(maxScoreStore);
+	let lastValue = $maxScoreStore;
 
 	const gradeFactory = new GradeFactory();
 	const definitionSets = gradeFactory.getGradeDefinitions().map(c => c.id);
@@ -20,7 +19,7 @@
 		 * @param {number} value
 		 */
       update(value) {
-		const newScore = get(maxScoreStore) > parseInt(node.max) || get(maxScoreStore) < parseInt(node.min) ? lastValue : value;
+		const newScore = $maxScoreStore > parseInt(node.max) || $maxScoreStore < parseInt(node.min) ? lastValue : value;
 		lastValue = newScore;
         maxScoreStore.set(newScore);
       }
