@@ -1,6 +1,6 @@
 <script>
-    import GradeListViewer from '$lib/gradeListViewer.svelte';
-    import GradeFactory from './gradeFactory';
+    import GradeListViewer from '$lib/grades/gradeListViewer.svelte';
+    import GradeFactory from '$lib/grades/gradeFactory';
 
     let maxScore = 100;
     let setId = 'AT';

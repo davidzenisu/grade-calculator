@@ -15,10 +15,10 @@
 /**
  * Converts the minified json format to a grade.
  * @param {GradeJson} json
- * @returns {import('$lib/gradeFactory').GradeDefinition}
+ * @returns {import('$lib/grades/gradeFactory').GradeDefinition}
  */
 function JSONToGrade(json) {
-    /** @type {import('$lib/gradeFactory').GradeDefinition} */
+    /** @type {import('$lib/grades/gradeFactory').GradeDefinition} */
     const parsedGrade = {
         label: json.l,
         base: json.b
@@ -32,7 +32,7 @@ function JSONToGrade(json) {
 /**
  * Converts the minified json format to a grade preset.
  * @param {GradePresetJson} json
- * @returns {import('$lib/presets/gradePresets').GradePreset}
+ * @returns {import('$lib/grades/presets/gradePresets').GradePreset}
  */
 function JSONToGradePreset(json) {
     const parsedPreset = {
@@ -45,7 +45,7 @@ function JSONToGradePreset(json) {
 /**
  * Converts the minified json format to a grade preset list
  * @param {Object} json
- * @returns {import('$lib/presets/gradePresets').GradePreset[]}
+ * @returns {import('$lib/grades/presets/gradePresets').GradePreset[]}
  */
 export function JSONToGradeCollection(json) {
     const gradePresetIdentifier = 'p';
@@ -59,7 +59,7 @@ export function JSONToGradeCollection(json) {
 
 /**
  * Converts a grade to a minified json format.
- * @param {import('$lib/gradeFactory').GradeDefinition} grade
+ * @param {import('$lib/grades/gradeFactory').GradeDefinition} grade
  * @returns {GradeJson}
  */
 function GradeToJSON(grade) {
@@ -76,7 +76,7 @@ function GradeToJSON(grade) {
 
 /**
  * Converts a grade preset to a minified json format.
- * @param {import('$lib/presets/gradePresets').GradePreset} gradePreset
+ * @param {import('$lib/grades/presets/gradePresets').GradePreset} gradePreset
  * @returns {GradePresetJson}
  */
 function GradePresetToJSON(gradePreset) {
@@ -89,7 +89,7 @@ function GradePresetToJSON(gradePreset) {
 
 /**
  * Converts a grade preset list to a minified json format.
- * @param {import('$lib/presets/gradePresets').GradePreset[]} gradePresetList
+ * @param {import('$lib/grades/presets/gradePresets').GradePreset[]} gradePresetList
  * @returns {GradeCollectionJson}
  */
 export function GradeCollectionToJSON(gradePresetList) {

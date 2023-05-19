@@ -1,5 +1,5 @@
 <script>
-    /** @type {import('$lib/gradeFactory').Grade[]}*/
+    /** @type {import('$lib/grades/gradeFactory').Grade[]}*/
 	export let grades;
     export let indent = 0;
     const indentIncrement = 8;

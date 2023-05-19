@@ -1,4 +1,4 @@
-import {GetGradePresets} from '$lib/presets/gradePresets';
+import {GetGradePresets} from '$lib/grades/presets/gradePresets';
 
 /**
  * @typedef Grade
