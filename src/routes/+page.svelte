@@ -30,7 +30,7 @@
 <div class="w-[28rem] max-w-full px-8">
 	<form>
 		<div class="flex flex-col gap-4">
-			<div class="flex flex-row gap-4 justify-between">
+			<div class="flex flex-row gap-4 justify-center">
 				<select class="sel-primary w-16" bind:value={setId}>
 					{#each definitionSets as set, i}
 						<option value="{set}">{set}</option>
@@ -44,7 +44,7 @@
 				min="0" 
 				max="1000" 
 				step="1">
-				<div></div>
+				<div class="w-16"></div>
 			</div>
 			<div class="flex flex-row gap-4 justify-between">
 				<button class="btn-primary flex-1">1</button>
