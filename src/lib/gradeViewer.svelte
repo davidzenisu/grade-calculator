@@ -11,7 +11,7 @@
         {#if grade.min === grade.max}
             <div >{grade.max}</div>
         {:else}
-            <div>{grade.min}-{grade.max}</div>
+            <div>{grade.min} - {grade.max}</div>
         {/if}
     </div>
     {#if grade.children}

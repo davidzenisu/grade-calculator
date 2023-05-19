@@ -4,6 +4,7 @@
 
     let maxScore = 100;
     let setId = 'AT';
+    let fraction = 1;
 
 	let lastValue = maxScore;
 	const gradeFactory = new GradeFactory();
@@ -25,10 +26,6 @@
     }
   }
 </script>
-
-<!-- <div class="flex flex-1 h-full flex-col items-center justify-between gap-8">
-   
-</div> -->
 
 <div class="flex flex-1 h-full flex-col max-w-full justify-between">
     <GradeListViewer factory={gradeFactory} maxPoints={maxScore || 0} setId={setId} ></GradeListViewer>
@@ -52,10 +49,14 @@
                     <div class="w-16"></div>
                 </div>
                 <div class="flex flex-row gap-4 justify-between">
-                    <button class="btn-primary flex-1">1</button>
-                    <button class="btn-primary flex-1">1/2</button>
-                    <button class="btn-primary flex-1">1/3</button>
-                    <button class="btn-primary flex-1">1/4</button>
+                    {#each [1, 2, 3, 4] as number}
+                    <div class="w-16">
+                        <input class="hidden peer" type="radio" id="{`fraction-${number}`}" name="fraction" value={number} bind:group={fraction} />
+                        <label class="rad-primary flex h-full w-full" for="{`fraction-${number}`}">
+                            1{number > 1? `/${number}` : ""}
+                        </label>
+                    </div>
+                    {/each}
                 </div>
             </div>
         </form>
