@@ -35,7 +35,7 @@
                 <div class="flex flex-row gap-4 justify-center">
                     <select class="sel-primary w-16" bind:value={$gradeSetStore}>
                         {#each definitionSets as set}
-                            <option value="{set}">{set}</option>
+                            <option value="{set}" selected="{$gradeSetStore===set}">{set}</option>
                         {/each}
                     </select>
                     <input class="inp-primary w-28" 
