@@ -2,7 +2,7 @@
     /** @type {import('$lib/gradeFactory').Grade[]}*/
 	export let grades;
     export let indent = 0;
-    const indentIncrement = 4;
+    const indentIncrement = 8;
 </script>
 
 {#each grades as grade, i}
