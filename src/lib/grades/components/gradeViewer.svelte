@@ -6,7 +6,7 @@
 </script>
 
 {#each grades as grade, i}
-    <div class="flex flex-row px-{indent} gap-16 justify-between">
+    <div class="flex flex-row px-{indent} gap-8 justify-between">
         <div>{grade.label}:</div>
         {#if grade.min === grade.max}
             <div >{grade.max}</div>

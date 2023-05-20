@@ -35,14 +35,15 @@ export default class GradeFactory {
 	* Generates list of grades based on max score and predefined grade ranges
 	* @param {GradeDefinition} gradeDefinition
 	* @param {number} maxScore
+	* @param {number} [fraction=1]
 	* @param {GradeDefinition} [nextDefinition]
 	* @returns {Grade}
 	 */
-	#calculateGrade(gradeDefinition, maxScore, nextDefinition) {
+	#calculateGrade(gradeDefinition, maxScore, fraction = 1, nextDefinition) {
 		return {
 			label: gradeDefinition.label,
 			max: Math.round(gradeDefinition.base * maxScore / 100),
-			min: nextDefinition? Math.round(nextDefinition.base * maxScore / 100)+1 : 0
+			min: nextDefinition? Math.round(nextDefinition.base * maxScore / 100)+(1/fraction) : 0
 		};
 	}
 
@@ -94,7 +95,7 @@ export default class GradeFactory {
 	#generate(gradeDef, options) {
 		const gradeDefSorted = this.#sortGradeDefAsc(gradeDef);
 		const calculatedGrades = gradeDefSorted.map((g,i,gs) => {
-			const calculatedGrade = this.#calculateGrade(g, options.max, gs[i-1]);
+			const calculatedGrade = this.#calculateGrade(g, options.max, options.fraction, gs[i-1]);
 			if (g.children) {
 				calculatedGrade.children = this.#generate(g.children, options);
 			}

@@ -28,7 +28,7 @@
 </script>
 
 <div class="flex flex-1 h-full flex-col max-w-full justify-between">
-    <GradeListViewer factory={gradeFactory} maxPoints={$maxScoreStore || 0} setId={$gradeSetStore} ></GradeListViewer>
+    <GradeListViewer factory={gradeFactory} maxPoints={$maxScoreStore || 0} setId={$gradeSetStore} fraction={$fractionStore} ></GradeListViewer>
     <div class="w-[28rem] max-w-full px-8">
         <form>
             <div class="flex flex-col gap-4">
