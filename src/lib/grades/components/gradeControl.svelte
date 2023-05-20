@@ -1,9 +1,9 @@
 <script>
     import GradeListViewer from '$lib/grades/components/gradeListViewer.svelte';
     import GradeFactory from '$lib/grades/gradeFactory';
-    import { gradeSetStore, maxScoreStore } from '../gradeLocalStores';
+    import { gradeSetStore, maxScoreStore, fractionStore } from '../gradeLocalStores';
 
-    let fraction = 1;
+    const maxFraction = 2;
 	let lastValue = $maxScoreStore;
 
 	const gradeFactory = new GradeFactory();
@@ -21,7 +21,7 @@
       update(value) {
 		const newScore = $maxScoreStore > parseInt(node.max) || $maxScoreStore < parseInt(node.min) ? lastValue : value;
 		lastValue = newScore;
-        maxScoreStore.set(newScore);
+        $maxScoreStore = newScore;
       }
     }
   }
@@ -48,10 +48,10 @@
                     step="1">
                     <div class="w-16"></div>
                 </div>
-                <div class="flex flex-row gap-4 justify-between">
-                    {#each [1, 2, 3, 4] as number}
+                <div class="flex flex-row gap-8 justify-center">
+                    {#each Array.from({ length: maxFraction}, (_, i) => i+1) as number}
                     <div class="w-16">
-                        <input class="hidden peer" type="radio" id="{`fraction-${number}`}" name="fraction" value={number} bind:group={fraction} />
+                        <input class="hidden peer" type="radio" id="{`fraction-${number}`}" name="fraction" value={number} bind:group={$fractionStore} />
                         <label class="rad-primary flex h-full w-full" for="{`fraction-${number}`}">
                             1{number > 1? `/${number}` : ""}
                         </label>
