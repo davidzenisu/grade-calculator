@@ -23,6 +23,7 @@ yarn build
 ```
 
 You can preview the production build with `npm run preview`.
-Build ar automatically triggered on each push/merge to the main branch
+Build ar automatically triggered on each push/merge to the main branch.
+Detail can be found in the `.github/workflows` action templates.
 
 > The adapter to deploy this application as an Azure SWA is already configured.
