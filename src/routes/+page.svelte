@@ -1,4 +1,4 @@
 <script>
-    import GradeControl from '$lib/grades/gradeControl.svelte';
+    import GradeControl from '$lib/grades/components/gradeControl.svelte';
 </script>
 <GradeControl></GradeControl>

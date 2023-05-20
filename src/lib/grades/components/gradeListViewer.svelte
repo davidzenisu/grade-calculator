@@ -1,6 +1,6 @@
 <script>
-    import GradeFactory from "./gradeFactory";
-    import GradeViewer from "./gradeViewer.svelte";
+    import GradeFactory from "$lib/grades/gradeFactory";
+    import GradeViewer from "$lib/grades/components/gradeViewer.svelte";
 	export let maxPoints = 100;
 	export let setId = 'US';
     export let factory = new GradeFactory();

@@ -1,7 +1,7 @@
 <script>
-    import GradeListViewer from '$lib/grades/gradeListViewer.svelte';
+    import GradeListViewer from '$lib/grades/components/gradeListViewer.svelte';
     import GradeFactory from '$lib/grades/gradeFactory';
-    import { gradeSetStore, maxScoreStore } from './gradeLocalStores';
+    import { gradeSetStore, maxScoreStore } from '../gradeLocalStores';
 
     let fraction = 1;
 	let lastValue = $maxScoreStore;
