@@ -1,4 +1,5 @@
 <script>
+    import Grade from "$lib/grades/components/grade.svelte";
     /** @type {import('$lib/grades/gradeFactory').Grade[]}*/
 	export let grades;
     export let indent = 0;
@@ -6,14 +7,7 @@
 </script>
 
 {#each grades as grade, i}
-    <div class="flex flex-row px-{indent} gap-16 justify-between">
-        <div>{grade.label}:</div>
-        {#if grade.min === grade.max}
-            <div >{grade.max}</div>
-        {:else}
-            <div>{grade.min} - {grade.max}</div>
-        {/if}
-    </div>
+    <Grade grade={grade} indent={indent}></Grade>
     {#if grade.children}
         <svelte:self grades={grade.children} indent={indent+indentIncrement}/>
     {/if}

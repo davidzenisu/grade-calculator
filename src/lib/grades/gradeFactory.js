@@ -5,6 +5,7 @@ import {GetGradePresets} from '$lib/grades/presets/gradePresets';
  * @prop {string} label The label to 
  * @prop {number} max The max score of a grade.
  * @prop {number} min The min score of a grade.
+ * @prop {string} [display] The display string of a grade.
  * @prop {Grade[]} [children] The list of child grades.
  * 
  * @typedef GradeDefinition
@@ -21,6 +22,10 @@ import {GetGradePresets} from '$lib/grades/presets/gradePresets';
  * @prop {string} setId Id of the grade set to use.
  * @prop {number} max Max score to reach.
  * @prop {number} [fraction=1] Number to include fractions of points (1/2, 1/3, etc.)
+ *
+ * @typedef GradeFormat
+ * @prop {'decimal'|'fraction'} format Format as decimal or fraction.
+ * @prop {number} precision Rounding precision when formatting.
  */
 
 export default class GradeFactory {
@@ -32,18 +37,108 @@ export default class GradeFactory {
 	#gradeCollections;
 
 	/**
+	* Calculated score based on base and max score, rounded to the closest fraction
+	* @param {number} baseScore
+	* @param {number} maxScore
+	* @param {number} [fraction=1]
+	* @returns {number}
+	 */
+	#calculateScore(baseScore, maxScore, fraction=1) {
+		const targetScore =  maxScore * (baseScore / 100);
+		//multiply by fraction
+		const targetFractionScore = targetScore * fraction;
+		//round to closest integer
+		const roundedFractionScore = Math.round(targetFractionScore);
+		//divide by fraction
+		const targetRoundedScore = roundedFractionScore / fraction;
+		return targetRoundedScore;
+	}
+
+	/**
+	 * Calculates closest fraction of given remainder and base.
+	 * @param {number} remainder
+	 * @param {number} base
+	 * @returns {number}
+	 */
+	#calculateFraction(remainder, base) {
+		return this.#calculateScore(remainder, base*100);
+	}
+
+	/** 
+	 * @description Method that returns number rounded to the given number of decimal places.
+	 * @param {number} input
+	 * @param {number} places
+	 * @returns {string}
+	 */
+	#formatDecimal(input, places) {
+		const placeModifier = 10 ** places;
+		const result = Math.round((input + Number.EPSILON) * placeModifier) / placeModifier;
+		return result.toString();
+	}
+
+	/**
+	 * @description Method that returns number rounded to the given fraction.
+	 * @param {number} input
+	 * @param {number} fraction
+	 * @returns {string} 
+	 */
+	#formatFraction(input, fraction) {
+		const baseScore = Math.floor(input);
+		const remainder = input-baseScore;
+		if (fraction === 1 || remainder === 0) {
+			return baseScore.toString();
+		}
+		const partOfFraction = this.#calculateFraction(remainder, fraction);
+		return `${baseScore} ${partOfFraction}/${fraction}`;
+	}
+
+
+	/**
+	 * @param {number} score
+	 * @param {GradeFormat} formatter
+	 * @returns {string}
+	 */
+	#formatScore(score, formatter) {
+		switch (formatter.format) {
+			case 'decimal':
+				return this.#formatDecimal(score, formatter.precision);
+			case 'fraction':
+			default:
+				return this.#formatFraction(score, formatter.precision);
+		}
+	}
+
+	/**
+	 * @param {Grade} grade
+	 * @param {GradeFormat} formatter
+	 * @returns {string}
+	 */
+	#formatGrade(grade, formatter) {
+		const maxScoreFormat = this.#formatScore(grade.max, formatter);
+		if (grade.max === grade.min) {
+			return maxScoreFormat;
+		}
+		const minScoreFormat = this.#formatScore(grade.min, formatter);
+		return `${minScoreFormat} - ${maxScoreFormat}`;
+	}
+
+	/**
 	* Generates list of grades based on max score and predefined grade ranges
 	* @param {GradeDefinition} gradeDefinition
 	* @param {number} maxScore
+	* @param {number} [fraction=1]
 	* @param {GradeDefinition} [nextDefinition]
 	* @returns {Grade}
 	 */
-	#calculateGrade(gradeDefinition, maxScore, nextDefinition) {
-		return {
+	#calculateGrade(gradeDefinition, maxScore, fraction = 1, nextDefinition) {
+		/** @type {Grade} */
+		const calculatedGrade = {
 			label: gradeDefinition.label,
-			max: Math.round(gradeDefinition.base * maxScore / 100),
-			min: nextDefinition? Math.round(nextDefinition.base * maxScore / 100)+1 : 0
+			max: this.#calculateScore(gradeDefinition.base, maxScore, fraction),
+			min: nextDefinition? this.#calculateScore(nextDefinition.base, maxScore, fraction) +(1/fraction) : 0,
 		};
+		calculatedGrade.display = this.#formatGrade(calculatedGrade, { format: 'decimal', precision: 2});
+		return calculatedGrade;
 	}
 
 	/**
@@ -94,7 +189,7 @@ export default class GradeFactory {
 	#generate(gradeDef, options) {
 		const gradeDefSorted = this.#sortGradeDefAsc(gradeDef);
 		const calculatedGrades = gradeDefSorted.map((g,i,gs) => {
-			const calculatedGrade = this.#calculateGrade(g, options.max, gs[i-1]);
+			const calculatedGrade = this.#calculateGrade(g, options.max, options.fraction, gs[i-1]);
 			if (g.children) {
 				calculatedGrade.children = this.#generate(g.children, options);
 			}
