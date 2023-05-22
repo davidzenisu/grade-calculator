@@ -32,6 +32,24 @@ export default class GradeFactory {
 	#gradeCollections;
 
 	/**
+	* Calculated score based on base and max score, rounded to the closest fraction
+	* @param {number} baseScore
+	* @param {number} maxScore
+	* @param {number} [fraction=1]
+	* @returns {number}
+	 */
+	#calculateScore(baseScore, maxScore, fraction=1) {
+		const targetScore =  maxScore * (baseScore / 100);
+		//multiply by fraction
+		const targetFractionScore = targetScore * fraction;
+		//round to closest integer
+		const roundedFractionScore = Math.round(targetFractionScore);
+		//divide by fraction
+		const targetRoundedScore = roundedFractionScore / fraction;
+		return targetRoundedScore;
+	}
+
+	/**
 	* Generates list of grades based on max score and predefined grade ranges
 	* @param {GradeDefinition} gradeDefinition
 	* @param {number} maxScore
@@ -42,8 +60,8 @@ export default class GradeFactory {
 	#calculateGrade(gradeDefinition, maxScore, fraction = 1, nextDefinition) {
 		return {
 			label: gradeDefinition.label,
-			max: Math.round(gradeDefinition.base * maxScore / 100),
-			min: nextDefinition? Math.round(nextDefinition.base * maxScore / 100)+(1/fraction) : 0
+			max: this.#calculateScore(gradeDefinition.base, maxScore, fraction),
+			min: nextDefinition? this.#calculateScore(nextDefinition.base, maxScore, fraction) +(1/fraction) : 0
 		};
 	}
 
