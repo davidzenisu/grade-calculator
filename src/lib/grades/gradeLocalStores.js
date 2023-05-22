@@ -35,3 +35,10 @@ fractionStore.subscribe((value) => {
         document.cookie = `${fractionConfig}=${value}`;
     }
 });
+
+const hideLabelConfig = 'hideLabels';
+const storedHideLabel = getCookie(hideLabelConfig) || false;
+export const hideLabelStores = writable(storedHideLabel);
+if (browser) {
+    document.cookie = `${hideLabelConfig}=true`;
+}
