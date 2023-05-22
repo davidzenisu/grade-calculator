@@ -8,6 +8,6 @@
     $: grades = factory.generate({ max: maxPoints, setId: setId, fraction: fraction });
 </script>
 
-<div class="w-[28rem] max-w-full grow overflow-auto flex flex-col gap-4 text-2xl xl:text-4xl md:text-3xl p-2">
+<div class="w-[40rem] max-w-full grow overflow-auto flex flex-col gap-4 text-2xl xl:text-4xl md:text-3xl p-2">
     <GradeViewer grades={grades}></GradeViewer>
 </div>
