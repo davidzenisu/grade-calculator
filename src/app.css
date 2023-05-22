@@ -10,7 +10,7 @@
 
 @media (prefers-color-scheme: dark) {
     :root {
-        --foreground-rgb: theme(colors.teal.50);
+        --foreground-rgb: #E8DACC;
         --background-start-rgb: theme(colors.slate.700);
         --background-end-rgb: theme(colors.rose.950);
     }
@@ -50,7 +50,7 @@ body {
             shadow-sm appearance-none shadow-slate-200
             border rounded
             p-2
-            text-gray-700 leading-tight 
+            text-slate-800 leading-tight 
             focus:outline-none;
     }
     .inp-primary {
@@ -60,7 +60,7 @@ body {
         @apply 
             int-primary 
             bg-white justify-center
-            peer-checked:text-white
+            peer-checked:text-[#E8DACC]
             peer-checked:bg-slate-800;
     }
     .sel-primary {
