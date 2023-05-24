@@ -1,7 +1,7 @@
 <script>
     import GradeListViewer from '$lib/grades/components/gradeListViewer.svelte';
     import GradeFactory from '$lib/grades/gradeFactory';
-    import { gradeSetStore, maxScoreStore, fractionStore, hideLabelStores } from '../gradeLocalStores';
+    import { gradeSetStore, maxScoreStore, fractionStore, hideLabelStore } from '../gradeLocalStores';
 
     const maxFraction = 2;
 	let lastValue = $maxScoreStore;
@@ -9,7 +9,7 @@
 	const gradeFactory = new GradeFactory();
 	const definitionSets = gradeFactory.getGradeDefinitions().map(c => c.id);
 
-    const hiddenLabels = $hideLabelStores? 'hidden' : '';
+    const hiddenLabels = $hideLabelStore? 'hidden' : '';
 
 	/**
      * @param {HTMLInputElement} node
