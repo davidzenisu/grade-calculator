@@ -1,6 +1,6 @@
 /// <reference lib="dom" />
 
-import { browser } from "$app/environment";
+import { browser, dev } from "$app/environment";
 
 /**
  * @typedef Cookie
@@ -31,7 +31,7 @@ export function getCookie(key) {
  * @param {'none'|'lax'|'strict'} [sameSite='strict']
  * @param {boolean} [secure=true]
 */
-export function setCookie(key, value, maxAge=31536000, sameSite='strict', secure=true) {
+export function setCookie(key, value, maxAge=31536000, sameSite='strict', secure=!dev) {
     if(!browser) {
         return;
     }
