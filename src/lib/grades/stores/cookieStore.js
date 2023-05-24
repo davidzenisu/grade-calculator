@@ -5,7 +5,8 @@ import { browser } from "$app/environment";
 /**
  * @typedef Cookie
  * @prop {string} cookieKey
- * @prop {Function} setByCookie
+ * @prop {(cookies:import('@sveltejs/kit').Cookies) => void} setStoreByCookie
+ * @prop {() => void} setCookieByStore
  */
 
 /** 

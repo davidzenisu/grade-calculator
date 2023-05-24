@@ -1,8 +1,8 @@
 /**
  * @typedef {import('svelte/store').Writable<number> & import('$lib/grades/stores/cookieStore').Cookie} NumberCookieStore
  */
-import { getCookie } from '$lib/grades/stores/cookieStore';
-import { writable } from 'svelte/store';
+import { getCookie, setCookie } from '$lib/grades/stores/cookieStore';
+import { get, writable } from 'svelte/store';
 
 
 /**
@@ -18,18 +18,27 @@ export function createNumberCookieStore(key, defaultValue) {
      * @param {import('@sveltejs/kit').Cookies} cookies
      * @this {NumberCookieStore}
      */
-    function setByCookie(cookies) {
+    function setStoreByCookie(cookies) {
         const cookieValue = cookies.get(this.cookieKey);
         if (cookieValue === undefined) {
             return;
         }
         this.set(parseInt(cookieValue));
     }
-	return {
+    /**
+     * @this {NumberCookieStore}
+     */
+    function setCookieByStore() {
+        setCookie(this.cookieKey, get(this));
+    }
+	const cookieStore = {
 		subscribe,
         set,
         update,
-        setByCookie,
+        setStoreByCookie,
+        setCookieByStore,
         cookieKey: key
 	};
+    cookieStore.subscribe(() => cookieStore.setCookieByStore());
+    return cookieStore;
 }

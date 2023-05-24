@@ -1,8 +1,8 @@
 /**
  * @typedef {import('svelte/store').Writable<boolean> & import('$lib/grades/stores/cookieStore').Cookie} FlagCookieStore
  */
-import { getCookie } from '$lib/grades/stores/cookieStore';
-import { writable } from 'svelte/store';
+import { getCookie, setCookie } from '$lib/grades/stores/cookieStore';
+import { get, writable } from 'svelte/store';
 
 /**
  * @param {string} key
@@ -17,18 +17,27 @@ export function createFlagCookieStore(key, defaultValue=false) {
      * @param {import('@sveltejs/kit').Cookies} cookies
      * @this {FlagCookieStore}
      */
-    function setByCookie(cookies) {
+    function setStoreByCookie(cookies) {
         const cookieValue = cookies.get(this.cookieKey);
         if (cookieValue === undefined) {
             return;
         }
         this.set(cookieValue === 'true');
     }
-	return {
+    /**
+     * @this {FlagCookieStore}
+     */
+    function setCookieByStore() {
+        setCookie(this.cookieKey, get(this));
+    }
+    const cookieStore = {
 		subscribe,
         set,
         update,
-        setByCookie,
+        setStoreByCookie,
+        setCookieByStore,
         cookieKey: key
 	};
+    setCookie(cookieStore.cookieKey, true);
+	return cookieStore;
 }
