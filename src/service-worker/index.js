@@ -67,5 +67,6 @@ sw.addEventListener('fetch', (event) => {
         }
     }
 
+    // @ts-ignore
     event.respondWith(respond());
 });
