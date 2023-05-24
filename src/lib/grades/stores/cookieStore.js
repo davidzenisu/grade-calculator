@@ -35,5 +35,5 @@ export function setCookie(key, value, maxAge=31536000, sameSite='strict', secure
     if(!browser) {
         return;
     }
-    document.cookie = `${key}=${value};max-age=${maxAge};samesite=${sameSite}`;
+    document.cookie = `${key}=${value};max-age=${maxAge};samesite=${sameSite};${secure?'Secure':''}`;
 }
