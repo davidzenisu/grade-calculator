@@ -3,7 +3,7 @@
   import Navbar from "$lib/menu/components/navbar.svelte";
   import "../app.css";
   import { navigating } from "$app/stores";
-  import LoadingSpinner from "$lib/menu/components/loadingSpinner.svelte";
+  import LoadingScreen from "$lib/menu/components/loadingScreen.svelte";
 
   let open = false;
 
@@ -14,7 +14,7 @@
 </script>
 
 {#if $navigating}
-  <LoadingSpinner />
+  <LoadingScreen />
 {/if}
 <div id="main-view" class="min-h-[100dvh] max-h-screen flex flex-col">
   <Sidebar bind:open />
