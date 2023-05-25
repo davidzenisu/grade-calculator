@@ -44,6 +44,12 @@ body {
 }
 
 @layer components {
+    h1 {
+        @apply text-2xl
+    };
+    h2 {
+        @apply text-xl
+    };
     .int-primary {
         @apply 
             text-2xl text-center
