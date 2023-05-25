@@ -7,8 +7,11 @@
 
   let open = false;
 
-  navigating.subscribe(() => {
-    // always close navbar!
+  navigating.subscribe((currentlyNavigating) => {
+    if (currentlyNavigating) {
+      return;
+    }
+    // always close navbar if navigator changes to null!
     open = false;
   });
 </script>
