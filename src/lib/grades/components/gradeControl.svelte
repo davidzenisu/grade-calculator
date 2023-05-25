@@ -29,9 +29,9 @@
   }
 </script>
 
-<div class="flex flex-1 h-full max-h-screen overflow-auto flex-col max-w-full justify-between items-center">
+<div id="grade-wrapper" class="flex flex-1 h-full max-h-screen overflow-auto flex-col max-w-full justify-between items-center gap-4">
     <GradeListViewer factory={gradeFactory} maxPoints={$maxScoreStore || 0} setId={$gradeSetStore} fraction={$fractionStore} ></GradeListViewer>
-    <div class="w-[28rem] max-w-full px-8">
+    <div id="grade-input" class="w-[28rem] max-w-full px-8">
         <form>
             <div class="flex flex-col gap-4 sm:flex-row sm:gap-16">
                 <fieldset class="flex flex-col justify-center">
