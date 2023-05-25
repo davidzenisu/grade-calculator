@@ -5,7 +5,7 @@
 </script>
 
 
-<div class="flex flex-row px-{indent} gap-8 justify-between">
+<div id="grade-detail" class="flex flex-row px-{indent} gap-8 justify-between">
     <div>{grade.label}:</div>
    <div>{grade.display}</div>
 </div>
