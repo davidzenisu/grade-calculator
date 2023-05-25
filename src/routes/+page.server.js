@@ -10,7 +10,7 @@ export async function load({ cookies }) {
 
 	if (dev) {
 		return new Promise((fulfil) => {
-			setTimeout(fulfil, 1000);
+			setTimeout(fulfil, 2000);
 		});
 	}
 }
