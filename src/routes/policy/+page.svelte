@@ -1,3 +1,7 @@
-<div class="flex-1 flex flex-col justify-center">
-    <span class="text-2xl">Coming soon...</span>
+<script>
+    import Markdown from "$lib/markdown/markdown.svelte";
+    import PRIVACY from './PRIVACY.md?raw';
+</script>
+<div class="max-w-[40rem]">
+    <Markdown content={PRIVACY}></Markdown>
 </div>
