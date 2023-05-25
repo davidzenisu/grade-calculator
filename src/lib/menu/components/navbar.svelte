@@ -1,13 +1,15 @@
 <script>
-	import Logo from '$lib/menu/components/logo.svelte'
-	import Hamburger from '$lib/menu/components/hamburger.svelte'
-	
-	export let sidebar = false
+	import Logo from "$lib/menu/components/logo.svelte";
+	import Hamburger from "$lib/menu/components/hamburger.svelte";
+	import Topbar from "./topbar.svelte";
+
+	export let sidebar = false;
 </script>
 
 <header class="flex justify-between p-2 items-center">
 	<nav class="flex">
-		<Hamburger bind:open={sidebar}/>
-		<Logo/>	
+		<Hamburger bind:open={sidebar} />
+		<Logo />
+		<Topbar hide={true} />
 	</nav>
 </header>
