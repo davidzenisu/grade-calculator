@@ -1,9 +1,15 @@
 <script>
-    import Sidebar from "$lib/menu/components/sidebar.svelte";
-    import Navbar from "$lib/menu/components/navbar.svelte";
+  import Sidebar from "$lib/menu/components/sidebar.svelte";
+  import Navbar from "$lib/menu/components/navbar.svelte";
   import "../app.css";
+  import { navigating } from '$app/stores';
 
   let open = false;
+
+  navigating.subscribe((isNavigating) => {
+    // always close navbar!
+    open = false;
+  });
 </script>
 
 <div id="main-view" class="min-h-[100dvh] max-h-screen flex flex-col">
