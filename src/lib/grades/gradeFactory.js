@@ -135,8 +135,11 @@ export default class GradeFactory {
 		const calculatedGrade = {
 			label: gradeDefinition.label,
 			max: this.#calculateScore(gradeDefinition.base, maxScore, fraction),
-			min: nextDefinition? this.#calculateScore(nextDefinition.base, maxScore, fraction) +(1/fraction) : 0,
+			min: 0
 		};
+		if(nextDefinition) {
+			calculatedGrade.min = Math.min(this.#calculateScore(nextDefinition.base, maxScore, fraction) +(1/fraction), calculatedGrade.max);
+		}
 		calculatedGrade.display = this.#formatGrade(calculatedGrade, { format: 'decimal', precision: 2});
 		return calculatedGrade;
 	}
