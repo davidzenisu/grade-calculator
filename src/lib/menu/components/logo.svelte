@@ -1,4 +1,4 @@
-<text x=0 y=20>GC</text>
+<text x=0 y=20></text>
 
 <style>
 	text {
