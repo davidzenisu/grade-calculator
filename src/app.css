@@ -57,7 +57,8 @@ body {
             border rounded
             p-2
             text-slate-800 leading-tight 
-            focus:outline-none;
+            focus:outline-none
+            bg-[#E8DACC];
     }
     .inp-primary {
         @apply int-primary;
@@ -65,7 +66,7 @@ body {
     .rad-primary {
         @apply 
             int-primary 
-            bg-white justify-center
+            justify-center
             peer-checked:text-[#E8DACC]
             peer-checked:bg-slate-800;
     }
