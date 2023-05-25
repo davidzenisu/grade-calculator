@@ -1,8 +1,7 @@
 <script>
 	import { fly } from "svelte/transition";
 	import { cubicInOut } from "svelte/easing";
-	import mainPages from "../mainPages";
-	import { page } from "$app/stores";
+	import mainPages from "$lib/menu/mainPages";
 	export let open = false;
 </script>
 
