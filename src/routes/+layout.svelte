@@ -21,7 +21,6 @@
   });
 
   page.subscribe((page) => {
-    console.log(page.route.id);
     currentPage = page.route.id;
   });
 </script>
