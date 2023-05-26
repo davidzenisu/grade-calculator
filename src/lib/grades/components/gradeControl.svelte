@@ -1,15 +1,21 @@
 <script>
-    import GradeListViewer from '$lib/grades/components/gradeListViewer.svelte';
-    import GradeFactory from '$lib/grades/gradeFactory';
-    import { gradeSetStore, maxScoreStore, fractionStore, hideLabelStore } from '../gradeLocalStores';
+    import { enhance } from "$app/forms";
+    import GradeListViewer from "$lib/grades/components/gradeListViewer.svelte";
+    import GradeFactory from "$lib/grades/gradeFactory";
+    import {
+        gradeSetStore,
+        maxScoreStore,
+        fractionStore,
+        hideLabelStore,
+    } from "../gradeLocalStores";
 
     const maxFraction = 2;
 	let lastValue = $maxScoreStore;
 
 	const gradeFactory = new GradeFactory();
-	const definitionSets = gradeFactory.getGradeDefinitions().map(c => c.id);
+    const definitionSets = gradeFactory.getGradeDefinitions().map((c) => c.id);
 
-    const hiddenLabels = $hideLabelStore? 'hidden' : '';
+    const hiddenLabels = $hideLabelStore ? "hidden" : "";
 
 	/**
      * @param {HTMLInputElement} node
@@ -21,14 +27,36 @@
 		 * @param {number} value
 		 */
       update(value) {
-		const newScore = $maxScoreStore > parseInt(node.max) || $maxScoreStore < parseInt(node.min) ? lastValue : value;
+                const newScore =
+                    $maxScoreStore > parseInt(node.max) ||
+                    $maxScoreStore < parseInt(node.min)
+                        ? lastValue
+                        : value;
 		lastValue = newScore;
         $maxScoreStore = newScore;
-      }
-    }
+            },
+        };
   }
 </script>
 
+<div
+    id="grade-wrapper"
+    class="flex flex-1 h-full max-h-screen overflow-auto flex-col max-w-full justify-between items-center gap-4"
+>
+    <GradeListViewer
+        factory={gradeFactory}
+        maxPoints={$maxScoreStore || 0}
+        setId={$gradeSetStore}
+        fraction={$fractionStore}
+    />
+    <div id="grade-input" class="w-[28rem] max-w-full px-8 sm:px-0">
+        <form
+            method="POST"
+            action="?/calculate"
+            use:enhance={({ cancel }) => {
+                cancel();
+            }}
+        >
             <div class="flex flex-col gap-4 sm:flex-row sm:items-center">
                 <fieldset class="flex flex-col justify-center">
                     <legend
