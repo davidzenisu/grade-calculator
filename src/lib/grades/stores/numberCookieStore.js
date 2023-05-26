@@ -1,7 +1,7 @@
 /**
  * @typedef {import('svelte/store').Writable<number> & import('$lib/grades/stores/cookieStore').Cookie} NumberCookieStore
  */
-import { getCookie, setCookie } from '$lib/grades/stores/cookieStore';
+import { getCookie, setCookieClient, setCookieServer } from '$lib/grades/stores/cookieStore';
 import { get, writable } from 'svelte/store';
 
 
@@ -12,7 +12,7 @@ import { get, writable } from 'svelte/store';
  */
 export function createNumberCookieStore(key, defaultValue) {
     const storedValue = getCookie(key);
-    const initialValue = storedValue === undefined? defaultValue : parseInt(storedValue);
+    const initialValue = storedValue === undefined ? defaultValue : parseInt(storedValue);
     const { subscribe, set, update } = writable(initialValue);
     /**
      * @param {import('@sveltejs/kit').Cookies} cookies
@@ -27,18 +27,35 @@ export function createNumberCookieStore(key, defaultValue) {
     }
     /**
      * @this {NumberCookieStore}
+     * @param {import('@sveltejs/kit').Cookies} [cookies]
      */
-    function setCookieByStore() {
-        setCookie(this.cookieKey, get(this));
+    function setCookieByStore(cookies) {
+        if (cookies) {
+            setCookieServer(cookies, this.cookieKey, get(this).toString());
+        }
+        setCookieClient(this.cookieKey, get(this));
     }
-	const cookieStore = {
-		subscribe,
+    /**
+     * @this {NumberCookieStore}
+     * @param {FormData} formData
+     */
+    function setByFormData(formData) {
+        const textValue = formData.get(this.cookieKey);
+        if (!textValue) {
+            return;
+        }
+        const storeValue = parseInt(/** @type {string}*/(textValue));
+        this.set(storeValue);
+    }
+    const cookieStore = {
+        subscribe,
         set,
         update,
         setStoreByCookie,
         setCookieByStore,
+        setByFormData,
         cookieKey: key
-	};
+    };
     cookieStore.subscribe(() => cookieStore.setCookieByStore());
     return cookieStore;
 }

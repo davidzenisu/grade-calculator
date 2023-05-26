@@ -1,6 +1,7 @@
 <script>
 	import { fly } from "svelte/transition";
 	import { cubicInOut } from "svelte/easing";
+	import mainPages from "$lib/menu/mainPages";
 	export let open = false;
 </script>
 
@@ -10,9 +11,13 @@
 		transition:fly={{ x: -100, easing: cubicInOut }}
 	>
 		<nav class="p-8 pt-16 text-2xl flex flex-col gap-4">
-			<a class="lnk-primary" href="/">Home</a>
-			<a class="lnk-primary" href="/settings">Settings</a>
-			<a class="lnk-primary" href="/policy">Private Policy</a>
+			{#each mainPages as mainPage}
+				<a
+					class="lnk-primary"
+					class:underline={mainPage.isCurrentPage()}
+					href={mainPage.path}>{mainPage.name}</a
+				>
+			{/each}
 		</nav>
 	</aside>
 {/if}

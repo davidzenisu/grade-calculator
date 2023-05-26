@@ -1,7 +1,7 @@
 /**
  * @typedef {import('svelte/store').Writable<boolean> & import('$lib/grades/stores/cookieStore').Cookie} FlagCookieStore
  */
-import { getCookie, setCookie } from '$lib/grades/stores/cookieStore';
+import { getCookie, setCookieClient, setCookieServer } from '$lib/grades/stores/cookieStore';
 import { get, writable } from 'svelte/store';
 
 /**
@@ -9,9 +9,9 @@ import { get, writable } from 'svelte/store';
  * @param {boolean} [defaultValue=false]
  * @returns {FlagCookieStore}
  */
-export function createFlagCookieStore(key, defaultValue=false) {
+export function createFlagCookieStore(key, defaultValue = false) {
     const storedValue = getCookie(key);
-    const initialValue = storedValue === undefined? defaultValue : storedValue === 'true';
+    const initialValue = storedValue === undefined ? defaultValue : storedValue === 'true';
     const { subscribe, set, update } = writable(initialValue);
     /**
      * @param {import('@sveltejs/kit').Cookies} cookies
@@ -26,18 +26,35 @@ export function createFlagCookieStore(key, defaultValue=false) {
     }
     /**
      * @this {FlagCookieStore}
+     * @param {import('@sveltejs/kit').Cookies} [cookies]
      */
-    function setCookieByStore() {
-        setCookie(this.cookieKey, get(this));
+    function setCookieByStore(cookies) {
+        if (cookies) {
+            setCookieServer(cookies, this.cookieKey, get(this).toString());
+        }
+        setCookieClient(this.cookieKey, get(this));
+    }
+    /**
+     * @this {FlagCookieStore}
+     * @param {FormData} formData
+     */
+    function setByFormData(formData) {
+        const textValue = formData.get(this.cookieKey);
+        if (!textValue) {
+            return;
+        }
+        const storeValue = textValue === 'true';
+        this.set(storeValue);
     }
     const cookieStore = {
-		subscribe,
+        subscribe,
         set,
         update,
         setStoreByCookie,
         setCookieByStore,
+        setByFormData,
         cookieKey: key
-	};
-    setCookie(cookieStore.cookieKey, true);
-	return cookieStore;
+    };
+    setCookieClient(cookieStore.cookieKey, true);
+    return cookieStore;
 }

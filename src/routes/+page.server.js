@@ -14,3 +14,15 @@ export async function load({ cookies }) {
 		});
 	}
 }
+
+export const actions = {
+	calculate: async ({ cookies, request }) => {
+		const formData = await request.formData();
+		maxScoreStore.setByFormData(formData);
+		maxScoreStore.setCookieByStore(cookies);
+		gradeSetStore.setByFormData(formData);
+		gradeSetStore.setCookieByStore(cookies);
+		fractionStore.setByFormData(formData);
+		fractionStore.setCookieByStore(cookies);
+	}
+};
