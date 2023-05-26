@@ -37,7 +37,7 @@
   >
     {#key currentPage}
       <div
-        class="transition-inner"
+        class="flex-1 flex flex-col overflow-auto max-w-full"
         in:fly={{ y: -50, duration: 500, delay: 100 }}
       >
         <slot />
