@@ -10,33 +10,33 @@
     } from "../gradeLocalStores";
 
     const maxFraction = 2;
-	let lastValue = $maxScoreStore;
+    let lastValue = $maxScoreStore;
 
-	const gradeFactory = new GradeFactory();
+    const gradeFactory = new GradeFactory();
     const definitionSets = gradeFactory.getGradeDefinitions().map((c) => c.id);
 
     const hiddenLabels = $hideLabelStore ? "hidden" : "";
 
-	/**
+    /**
      * @param {HTMLInputElement} node
      * @param {number} value
      */
-	function validator(node, value) {
-    return {
-		/**
-		 * @param {number} value
-		 */
-      update(value) {
+    function validator(node, value) {
+        return {
+            /**
+             * @param {number} value
+             */
+            update(value) {
                 const newScore =
                     $maxScoreStore > parseInt(node.max) ||
                     $maxScoreStore < parseInt(node.min)
                         ? lastValue
                         : value;
-		lastValue = newScore;
-        $maxScoreStore = newScore;
+                lastValue = newScore;
+                $maxScoreStore = newScore;
             },
         };
-  }
+    }
 </script>
 
 <div
@@ -92,13 +92,13 @@
                             >
                             <input
                                 class="inp-primary w-28"
-                            bind:value={$maxScoreStore}
-                            use:validator={$maxScoreStore}
-                            type="number" 
-                            id="maxScoreInput"
+                                bind:value={$maxScoreStore}
+                                use:validator={$maxScoreStore}
+                                type="number"
+                                id="maxScoreInput"
                                 name="maxScore"
-                            min="0" 
-                            max="1000" 
+                                min="0"
+                                max="1000"
                                 step="1"
                             />
                         </div>
@@ -114,7 +114,7 @@
                     </div>
                     <div class="flex flex-row gap-4 justify-center">
                         {#each Array.from({ length: maxFraction }, (_, i) => i + 1) as number}
-                        <div class="w-16">
+                            <div class="w-16">
                                 <input
                                     class="hidden peer"
                                     type="radio"
@@ -128,13 +128,15 @@
                                     for={`fraction-${number}`}
                                 >
                                     1{number > 1 ? `/${number}` : ""}
-                            </label>
-                        </div>
+                                </label>
+                            </div>
                         {/each}
                     </div>
                 </fieldset>
+                <noscript>
+                    <button class="btn-primary">Calculate</button>
+                </noscript>
             </div>
-
         </form>
     </div>
 </div>
