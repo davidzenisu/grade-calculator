@@ -10,6 +10,8 @@
 	<nav class="flex">
 		<Hamburger bind:open={sidebar} />
 		<Logo />
-		<Topbar hide={true} />
+		<noscript>
+			<Topbar />
+		</noscript>
 	</nav>
 </header>
