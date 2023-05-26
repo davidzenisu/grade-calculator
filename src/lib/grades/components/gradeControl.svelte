@@ -134,7 +134,9 @@
                     </div>
                 </fieldset>
                 <noscript>
-                    <button class="btn-primary">Calculate</button>
+                    <button class="text-lg block mx-auto btn-primary"
+                        >Calculate</button
+                    >
                 </noscript>
             </div>
         </form>
