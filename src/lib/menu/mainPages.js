@@ -41,7 +41,7 @@ function createPages(pageList) {
  */
 const mainPages = [
     { name: "Home", path: "" },
-    { name: "Presets", path: "sets" }
+    { name: "Presets", path: "sets" },
     { name: "Settings" },
     { name: "Privacy Policy", path: "policy" },
 ];
