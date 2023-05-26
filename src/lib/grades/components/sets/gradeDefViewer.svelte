@@ -10,7 +10,7 @@
     <GradeDef {gradeDef} {indent} />
     {#if gradeDef.children}
         <svelte:self
-            grades={gradeDef.children}
+            gradeDefs={gradeDef.children}
             indent={indent + indentIncrement}
         />
     {/if}
