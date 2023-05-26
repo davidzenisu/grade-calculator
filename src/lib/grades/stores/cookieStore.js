@@ -6,7 +6,8 @@ import { browser, dev } from "$app/environment";
  * @typedef Cookie
  * @prop {string} cookieKey
  * @prop {(cookies:import('@sveltejs/kit').Cookies) => void} setStoreByCookie
- * @prop {() => void} setCookieByStore
+ * @prop {(cookies?:import('@sveltejs/kit').Cookies) => void} setCookieByStore
+ * @prop {(formData:FormData) => void} setByFormData
  */
 
 /** 
@@ -15,7 +16,7 @@ import { browser, dev } from "$app/environment";
  * @returns {string|undefined}
 */
 export function getCookie(key) {
-    if(!browser) {
+    if (!browser) {
         return undefined;
     }
     var match = document?.cookie?.match(new RegExp(`(^| )${key}=([^;]+)`));
