@@ -54,6 +54,8 @@
             method="POST"
             action="?/calculate"
             use:enhance={({ cancel }) => {
+                const maxScoreInput = document.getElementById("maxScoreInput");
+                maxScoreInput?.blur();
                 cancel();
             }}
         >
