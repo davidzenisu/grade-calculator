@@ -11,6 +11,7 @@
 </script>
 
 {#if preset}
+    <div class="text-center">{preset?.label}</div>
     <GradeDefViewer gradeDefs={preset?.grades} />
 {:else}
     <div>No grade set available for id {presetId}</div>
