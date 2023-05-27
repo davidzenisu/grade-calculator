@@ -23,10 +23,18 @@
                     // always cancelling for now!
                     cancel();
                 }}
+                class="flex flex-row justify-between gap-8"
             >
                 <input type="hidden" name="id" value={preset.id} />
                 <span>{preset.label}</span>
-                <button aria-label="Mark as complete">X</button>
+                <div class="font-mono">
+                    {#if preset.readonly}
+                        <a href="/sets/view/{preset.id}" aria-label="View">👁</a>
+                    {:else}
+                        <a href="/sets/edit/{preset.id}" aria-label="Edit">✎</a>
+                        <button aria-label="Delete">🗑</button>
+                    {/if}
+                </div>
             </form>
         {/each}
     </div>
