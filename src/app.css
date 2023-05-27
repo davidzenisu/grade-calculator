@@ -45,11 +45,14 @@ body {
 
 @layer components {
     h1 {
-        @apply text-2xl
+        @apply text-2xl xl:text-4xl md:text-3xl
     };
     h2 {
-        @apply text-xl
+        @apply text-xl xl:text-3xl md:text-2xl
     };
+    p {
+        @apply text-lg xl:text-2xl md:text-xl 
+    }
     .int-primary {
         @apply 
             text-2xl text-center
