@@ -9,7 +9,7 @@
 </script>
 
 <div class="flex flex-1 flex-col gap-8 overflow-auto justify-between">
-    <h1>Grade Presets</h1>
+    <h1 class="text-center">Grade Presets</h1>
     <div
         class="flex-1 presets flex flex-col items-center gap-4 w-full text-xl overflow-auto"
     >
