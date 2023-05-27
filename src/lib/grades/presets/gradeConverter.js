@@ -4,6 +4,7 @@
  *
  * @typedef GradePresetJson
  * @prop {string} c Short identifier for culture.
+ * @prop {string} l Short identifier for label.
  * @prop {GradeJson[]} g Short identifier for grades.
  *
  * @typedef GradeJson
@@ -37,6 +38,7 @@ function JSONToGrade(json) {
 function JSONToGradePreset(json) {
     const parsedPreset = {
         culture: json.c,
+        label: json.l,
         grades: json.g.map(JSONToGrade)
     };
     return parsedPreset;
@@ -82,6 +84,7 @@ function GradeToJSON(grade) {
 function GradePresetToJSON(gradePreset) {
     const jsonPreset = {
         c: gradePreset.culture,
+        l: gradePreset.label,
         g: gradePreset.grades.map(GradeToJSON)
     };
     return jsonPreset;
@@ -94,5 +97,5 @@ function GradePresetToJSON(gradePreset) {
  */
 export function GradeCollectionToJSON(gradePresetList) {
     const gradePresetJsonList = gradePresetList.map(GradePresetToJSON);
-    return { p: gradePresetJsonList};
+    return { p: gradePresetJsonList };
 }

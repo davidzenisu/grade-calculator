@@ -1,4 +1,4 @@
-import {GetGradePresets} from '$lib/grades/presets/gradePresets';
+import { GetGradePresets } from '$lib/grades/presets/gradePresets';
 
 /**
  * @typedef Grade
@@ -17,6 +17,7 @@ import {GetGradePresets} from '$lib/grades/presets/gradePresets';
  * @prop {GradeDefinition[]} grades List of grades to generate scores from.
  * @prop {string} id Identifier for grade collection.
  * @prop {string} label Label for grade collection.
+ * @prop {boolean} [readonly=false] Flag to identify whether collection is readonly or not.
  *  
  * @typedef GradeOptions
  * @prop {string} setId Id of the grade set to use.
@@ -43,8 +44,8 @@ export default class GradeFactory {
 	* @param {number} [fraction=1]
 	* @returns {number}
 	 */
-	#calculateScore(baseScore, maxScore, fraction=1) {
-		const targetScore =  maxScore * (baseScore / 100);
+	#calculateScore(baseScore, maxScore, fraction = 1) {
+		const targetScore = maxScore * (baseScore / 100);
 		//multiply by fraction
 		const targetFractionScore = targetScore * fraction;
 		//round to closest integer
@@ -61,7 +62,7 @@ export default class GradeFactory {
 	 * @returns {number}
 	 */
 	#calculateFraction(remainder, base) {
-		return this.#calculateScore(remainder, base*100);
+		return this.#calculateScore(remainder, base * 100);
 	}
 
 	/** 
@@ -84,7 +85,7 @@ export default class GradeFactory {
 	 */
 	#formatFraction(input, fraction) {
 		const baseScore = Math.floor(input);
-		const remainder = input-baseScore;
+		const remainder = input - baseScore;
 		if (fraction === 1 || remainder === 0) {
 			return baseScore.toString();
 		}
@@ -137,10 +138,10 @@ export default class GradeFactory {
 			max: this.#calculateScore(gradeDefinition.base, maxScore, fraction),
 			min: 0
 		};
-		if(nextDefinition) {
-			calculatedGrade.min = Math.min(this.#calculateScore(nextDefinition.base, maxScore, fraction) +(1/fraction), calculatedGrade.max);
+		if (nextDefinition) {
+			calculatedGrade.min = Math.min(this.#calculateScore(nextDefinition.base, maxScore, fraction) + (1 / fraction), calculatedGrade.max);
 		}
-		calculatedGrade.display = this.#formatGrade(calculatedGrade, { format: 'decimal', precision: 2});
+		calculatedGrade.display = this.#formatGrade(calculatedGrade, { format: 'decimal', precision: 2 });
 		return calculatedGrade;
 	}
 
@@ -159,7 +160,7 @@ export default class GradeFactory {
 		*/
 		function compareGradeDef(grade, otherGrade) {
 			const compared = grade.base - otherGrade.base;
-			return asc? compared : compared * -1;
+			return asc ? compared : compared * -1;
 		}
 		return gradeDefinitions.sort(compareGradeDef);
 	}
@@ -191,8 +192,8 @@ export default class GradeFactory {
 	 */
 	#generate(gradeDef, options) {
 		const gradeDefSorted = this.#sortGradeDefAsc(gradeDef);
-		const calculatedGrades = gradeDefSorted.map((g,i,gs) => {
-			const calculatedGrade = this.#calculateGrade(g, options.max, options.fraction, gs[i-1]);
+		const calculatedGrades = gradeDefSorted.map((g, i, gs) => {
+			const calculatedGrade = this.#calculateGrade(g, options.max, options.fraction, gs[i - 1]);
 			if (g.children) {
 				calculatedGrade.children = this.#generate(g.children, options);
 			}
