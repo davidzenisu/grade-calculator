@@ -6,6 +6,7 @@
     const presets = GetGradePresets();
     /** @type {string[]} */
     let deleting = [];
+    //TODO: Fix monospace
 </script>
 
 <div class="flex flex-1 flex-col gap-8 overflow-auto justify-between">
