@@ -1,7 +1,7 @@
 {
     "theme_color": "#4c0519",
     "background_color": "#334155",
-    "display": "standalone",
+    "display": "fullscreen",
     "dir": "ltr",
     "lang": "en-GB",
     "scope": "/",
