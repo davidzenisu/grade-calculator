@@ -1,0 +1,14 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.luvdav.grades.twa",
+      "sha256_cert_fingerprints": [
+        "1B:F2:48:72:04:3F:EB:AA:25:6C:3B:11:9E:7E:DE:49:3D:1B:0E:B2:37:66:97:F5:0A:38:B7:09:3A:07:A9:28"
+      ]
+    }
+  }
+]
