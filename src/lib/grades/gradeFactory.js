@@ -36,6 +36,25 @@ export default class GradeFactory {
 	/** @type {GradeCollection[]} */
 	#gradeCollections;
 
+  /**
+   * Get number of decimal places.
+   * @param {number} score
+   * @returns
+   */
+  #calculateDecimals(score) {
+    if (Math.floor(score.valueOf()) === score.valueOf()) return 0;
+    return score.toString().split(".")[1].length || 0;
+  }
+
+  /**
+   * Get place of decimal as number.
+   * @param {number} place
+   * @returns
+   */
+  #decimalToNumber(place) {
+    return Math.pow(10, place * -1);
+  }
+
 	/**
 	* Calculated score based on base and max score, rounded to the closest fraction
 	* @param {number} baseScore
@@ -43,16 +62,24 @@ export default class GradeFactory {
 	* @param {number} [fraction=1]
 	* @returns {number}
 	 */
-	#calculateScore(baseScore, maxScore, fraction=1) {
-		// TODO: Change calculation so that score is rounded to the next full percent score instead of fraction!
-		const targetScore =  maxScore * (baseScore / 100);
-		//multiply by fraction
-		const targetFractionScore = targetScore * fraction;
-		//round to closest integer
-		const roundedFractionScore = Math.round(targetFractionScore);
-		//divide by fraction
-		const targetRoundedScore = roundedFractionScore / fraction;
-		return targetRoundedScore;
+  #calculateScore(baseScore, maxScore, fraction = 1) {
+    // Step1: Get number of decimals of baseScore
+    const decimalPlaces = this.#calculateDecimals(baseScore);
+    // Step2: Determine next highest score to compare against
+    const nextGradeBase = baseScore + this.#decimalToNumber(decimalPlaces);
+    // Step3: Calculate a cutoff score in the middle; anything above or equla is the next grade
+    const cuttoffBase = (baseScore + nextGradeBase) / 2;
+    // Step4: Calculate exact score off cutoff
+    const cutoffScore = maxScore * (cuttoffBase / 100);
+    // Step5: Multiply by fraction
+    const cutoffFractionScore = cutoffScore * fraction;
+    // Step6: Get next higher fractioned score
+    const roundedFractionCutoffScore = Math.ceil(cutoffFractionScore);
+    // Step7: Divide by fraction
+    const cutoffRoundedScore = roundedFractionCutoffScore / fraction;
+    // Step8: Calculate score a fraction below cutoff
+    const targetScore = cutoffRoundedScore - 1 / fraction;
+    return targetScore;
 	}
 
 	/**
