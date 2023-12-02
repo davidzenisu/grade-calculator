@@ -44,6 +44,7 @@ export default class GradeFactory {
 	* @returns {number}
 	 */
 	#calculateScore(baseScore, maxScore, fraction=1) {
+		// TODO: Change calculation so that score is rounded to the next full percent score instead of fraction!
 		const targetScore =  maxScore * (baseScore / 100);
 		//multiply by fraction
 		const targetFractionScore = targetScore * fraction;
