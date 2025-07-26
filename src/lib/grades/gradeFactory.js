@@ -79,8 +79,10 @@ export default class GradeFactory {
     const cutoffRoundedScore = roundedFractionCutoffScore / fraction;
     // Step8: Calculate score a fraction below cutoff
     const targetScore = cutoffRoundedScore - 1 / fraction;
-    // Step9: Finally, always return max score if calculated score is higher
-    return Math.min(targetScore, maxScore);
+	// Step9: Finally, always return max score if calculated score is higher
+    const finalScore = Math.min(targetScore, maxScore);
+	// Step10: If number negative return 0
+	return Math.max(finalScore, 0);
 	}
 
 	/**
